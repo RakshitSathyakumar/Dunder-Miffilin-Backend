@@ -4,9 +4,11 @@ const errorMiddleware = require('./middleware/error');
 
 app.use(express.json());
 //Route imports
-const product = require('./Routes/productRoute')
+const productRoute = require('./Routes/productRoute')
+const userRoute = require('./Routes/userRoute');
 
-app.use("/api",product)
+app.use("/api",productRoute);
+app.use("/api",userRoute);
 
 //middleware error
 app.use(errorMiddleware);

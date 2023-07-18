@@ -15,11 +15,17 @@ exports.createProduct = asyncErrorHandler(async (req, res, next) => {
 
 // to get all products (R)l
 exports.getAllProducts = asyncErrorHandler(async (req, res) => {
-  const apiFeature = new APIFeatures(productModel.find(),req.query).search();
-  console.log(apiFeature);
+  // console.log(apiFeature);
+  const resultPerPage = 10000;
+  const productCount = await productModel.countDocuments();
+  const apiFeature = new APIFeatures(productModel.find(), req.query)
+    .search()
+    .sortBy()
+    .pagination(resultPerPage);
   const product = await apiFeature.query;
   res.status(200).json({
-    sucees:true,
+    sucees: true,
+    productCount,
     product,
   });
 });
@@ -28,9 +34,9 @@ exports.getAllProducts = asyncErrorHandler(async (req, res) => {
 
 exports.updateProduct = asyncErrorHandler(async (req, res, next) => {
   let product = await productModel.findById(req.params.id);
-  console.log(product);
+  // console.log(product);
   if (!product) {
-    return next(new errorHandler("Product not found",500)) ;
+    return next(new errorHandler("Product not found", 500));
   }
 
   product = await productModel.findByIdAndUpdate(req.params.id, req.body, {
@@ -55,7 +61,7 @@ exports.deleteProduct = asyncErrorHandler(async (req, res, next) => {
   // }
 
   if (!product) {
-    return next(new errorHandler("Product not found",500)) ;
+    return next(new errorHandler("Product not found", 500));
   }
 
   res.status(200).json({
@@ -72,7 +78,7 @@ exports.getProductDetails = asyncErrorHandler(async (req, res, next) => {
   //   });
   // }
   if (!product) {
-    return next(new errorHandler("Product not found",500)) ;
+    return next(new errorHandler("Product not found", 500));
   }
   res.status(200).json({
     data: "found",
