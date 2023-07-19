@@ -5,6 +5,7 @@ const errorHandler = require("../utils/errorHandler");
 const APIFeatures = require("../utils/apiFeature");
 // Creating Product -- Admin (C)
 exports.createProduct = asyncErrorHandler(async (req, res, next) => {
+  req.body.user = req.user.id;
   const product = await productModel.create(req.body);
 
   res.status(201).json({
