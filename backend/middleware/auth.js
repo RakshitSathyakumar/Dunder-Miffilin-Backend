@@ -4,6 +4,7 @@ const asyncErrorHandler = require("./asyncErrorHandler");
 const jwt = require("jsonwebtoken");
 // for authenticated users
 exports.isAuthUser = asyncErrorHandler(async (req, res, next) => {
+
   const { token } = req.cookies;
 
   if (!token) {
@@ -11,8 +12,9 @@ exports.isAuthUser = asyncErrorHandler(async (req, res, next) => {
   }
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
-//   console.log(decodedData.id);
+
   req.user = await user.findById(decodedData.id);
+  console.log(req.user.id);
   //   console.log(req.user);
   next();
 });
