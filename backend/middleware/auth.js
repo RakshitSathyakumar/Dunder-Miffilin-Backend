@@ -14,7 +14,7 @@ exports.isAuthUser = asyncErrorHandler(async (req, res, next) => {
   const decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
   req.user = await user.findById(decodedData.id);
-  console.log(req.user.id);
+  // console.log(req.user.id);
   //   console.log(req.user);
   next();
 });

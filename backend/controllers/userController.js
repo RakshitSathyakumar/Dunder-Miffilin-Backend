@@ -202,9 +202,35 @@ exports.updateUserProfile = asyncErrorHandler(async (req, res, next) => {
 // get all users -- admin route
 exports.getAllUserDetails = asyncErrorHandler(async(req,res,next)=>{
   const users = await userModel.find();
-  console.log(users);
+  const userCount =  await userModel.countDocuments();
+  // console.log(userCount);
   res.status(400).json({
     success:true,
+    userCount,
+    users
+  });
+});
+
+// get all users not admins -- admin route
+exports.getOnlyUserDetails = asyncErrorHandler(async(req,res,next)=>{
+  const users = await userModel.find({"role":"user"});
+  const userCount =  await userModel.countDocuments({"role":"user"});
+  // console.log(userCount);
+  res.status(400).json({
+    success:true,
+    userCount,
+    users
+  });
+});
+
+// get all admins -- admin route
+exports.getOnlyAdminDetails = asyncErrorHandler(async(req,res,next)=>{
+  const users = await userModel.find({"role":"admin"});
+  const userCount =  await userModel.countDocuments({"role":"admin"});
+  // console.log(userCount);
+  res.status(400).json({
+    success:true,
+    userCount,
     users
   });
 });

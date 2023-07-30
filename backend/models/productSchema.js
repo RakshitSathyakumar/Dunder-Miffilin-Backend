@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true],
   },
-  Stock: {
+  stock: {
     type: Number,
     required: [true],
     default: 1,
@@ -42,13 +42,13 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  reviews: [
+    reviews: [
     {
-      // user: {
-      //   type: mongoose.Schema.ObjectId,
-      //   ref: "User",
-      //   required: true,
-      // },
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
+      },
       name: {
         type: String,
         required: true,
